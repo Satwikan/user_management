@@ -10,13 +10,12 @@ spring:
     username: postgres
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
-
   mail:
     host: localhost
     port: 1025
