@@ -1,5 +1,6 @@
 package com.example.user_management.authentication;
 
+import com.example.user_management.appuser.AppUser;
 import com.example.user_management.appuser.AppUserService;
 import com.example.user_management.util.JwtUtil;
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ public class AuthenticationController {
         } catch (BadCredentialsException e) {
             throw new Exception("Username or password is incorrect");
         }
-        UserDetails userDetails =  appUserService.loadUserByUsername(request.getUsername());
+        AppUser userDetails =  appUserService.loadUserByUsername(request.getUsername());
         String jwt = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }

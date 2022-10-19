@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import net.minidev.json.JSONObject;
 
 @Getter
 @AllArgsConstructor
@@ -14,4 +15,5 @@ public class RegistrationRequest {
     private final String lastName;
     private final String email;
     private final String password;
+    private final JSONObject address;
 }

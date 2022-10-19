@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.minidev.json.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +36,7 @@ public class AppUser implements UserDetails {
     private String lastName;
     private String email;
     private String password;
+    private String address;
 
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
@@ -45,11 +47,13 @@ public class AppUser implements UserDetails {
                    String lastName,
                    String email,
                    String password,
+                   JSONObject address,
                    AppUserRole appUserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.address = address.toString();
         this.appUserRole = appUserRole;
     }
     @Override
@@ -95,4 +99,5 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
 }

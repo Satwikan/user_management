@@ -1,5 +1,6 @@
 package com.example.user_management.filters;
 
+import com.example.user_management.appuser.AppUser;
 import com.example.user_management.appuser.AppUserService;
 import com.example.user_management.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = this.appUserService.loadUserByUsername(username);
+            AppUser userDetails = (AppUser) this.appUserService.loadUserById( Long.valueOf(username) );
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
 
