@@ -101,4 +101,7 @@ public class AppUser implements UserDetails {
         return enabled;
     }
 
+    public boolean isAdmin() {
+        return appUserRole == AppUserRole.ADMIN;
+    }
 }
