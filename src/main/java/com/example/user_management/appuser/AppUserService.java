@@ -3,11 +3,15 @@ package com.example.user_management.appuser;
 import com.example.user_management.registration.token.ConfirmationToken;
 import com.example.user_management.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -48,5 +52,29 @@ public class AppUserService implements UserDetailsService {
     }
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+    public AppUser updateUser(long userId, AppUser updatedAppUser) {
+        try {
+            System.out.println("id is "+userId);
+            AppUser appUser = appUserRepository.findById(userId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id: " + userId));
+            if (updatedAppUser.getFirstName()!= null)
+                appUser.setFirstName(updatedAppUser.getFirstName());
+            if (updatedAppUser.getLastName()!= null)
+                appUser.setLastName(updatedAppUser.getLastName());
+            if (updatedAppUser.getEmail()!= null)
+                appUser.setEmail(updatedAppUser.getEmail());
+            if (updatedAppUser.getPassword()!= null) {
+                String encodedPassword = bCryptPasswordEncoder.encode(updatedAppUser.getPassword());
+                appUser.setPassword(encodedPassword);
+            }
+            appUserRepository.save(appUser);
+            return ResponseEntity.ok(appUser).getBody();
+        }
+        catch (
+                ResourceNotFoundException e) {
+            return null;
+        }
     }
 }
