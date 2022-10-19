@@ -25,8 +25,7 @@ public class AppUserController {
     }
     @PostMapping(consumes = {"application/json"})
     public AppUser addUser(@RequestBody AppUser appUser) {
-        appUserRepository.save(appUser);
-        return appUser;
+        return appUserRepository.save(appUser);
     }
     @PutMapping(path = "{userId}", consumes = {"application/json"})
     public AppUser updateUser(@PathVariable long userId, @RequestBody AppUser updatedAppUser) {
